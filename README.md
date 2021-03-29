@@ -1,9 +1,9 @@
 # Stock-Analysis
-### An analysis of green energy stocks for a fictional financial advisor
+### An analysis of green energy stocks for a financial advisor
 
 ## Overview
 
-The purpose of this analysis is to show the yearly returns of a selection of green energy stock. My fictional client is looking to advise his parents on stock options, and they have decided to invest in green energy companies. Their favorite stock is DQ, but they chose this for sentimental reasons so are there other stocks that would give them a better financial return? 
+The purpose of this analysis is to show the yearly returns of a selection of green energy stock. My client is looking to advise his parents on stock options, and they have decided to invest in green energy companies. Their favorite stock is DQ, but they chose this for sentimental reasons, so are there other stocks that would give them a better financial return? 
 
 To determine this, I want to run a basic analysis over multiple stocks. This has the added benefit of understanding looped code, as well as refactoring code for faster results. Faster results are important because our data sample right now is small, but the user could want to plug in exponentially larger data sets, which take longer to loop through. 
 
@@ -37,7 +37,7 @@ I'll start with the code. The initial way I ran this code was with a nested `For
         Next j
  ```
 This made sense to me, because I needed to move through both the array and the rows of data. However, nested loops increase the iterations exponentially. 
-In my data set, I only had 12 stocks, each with many rows of data. My fictional client was thinking about analyzing all stocks using this code, which would cause the loop iterations to absolutely skyrocket. It only took a little over a second to run this code, but for more and more loops, the time to execute 
+In my data set, I only had 12 stocks, each with many rows of data. My fictional client was thinking about analyzing all stocks using this code, which would cause the loop iterations to skyrocket. It only took a little over a second to run this code, but for more and more loops, there is a longer waiting time. 
 This code ran in 1.25 seconds for 2017 and 1.23 seconds for 2018.
 
 ![Original Code Run Time - 2017](https://github.com/caseykotowski/Stock-Analysis/blob/main/Resources/Code%20Timer%20-%202017%20Original.png)
@@ -46,7 +46,7 @@ This code ran in 1.25 seconds for 2017 and 1.23 seconds for 2018.
 
 ### Refactoring
 
-I want to reduce the runtime, and since extra loops cause the extra time how do I reduce the number of loops? I want to remove the outer loop nest from the original code, because I can make the other variables arrays, and increase the index within the remaining loop. 
+I want to reduce the runtime, and since extra loops cause the extra time, I need to reduce the loops. I want to remove the outer loop nest from the original code, because I can make the other variables arrays, and increase the index within the remaining loop. 
 
 ```
  'Loop through all arrays to set them at zero for the start of each iteration
@@ -79,7 +79,7 @@ I want to reduce the runtime, and since extra loops cause the extra time how do 
     
     Next i
 ```
-I have 3 more indexed variables, which I set to zero for all indicies. From there, I only have to loop over all of the rows of data. I check for relevent volume to add, and if they're on the first or last row of data for the stock the index is connected to. 
+I have 3 more indexed variables, which I set to zero for all indicies. From there, I only have to loop over all of the rows of data. I check for relavent volume to add, and if they're on the first or last row of data for the stock the index is connected to. 
 Then, if it's the last cell for the index, I increase the ticker index by 1 to switch to the next stock. This is how we loop through all of the stocks without creating another layer to the loops. 
 This increased the speed of the code considerably, while delivering the same computational results. 
 For 2017, the code ran in 0.27 seconds, and 0.27 seconds for 2018.
@@ -95,7 +95,7 @@ Those are the only stocks I would reccommend investing in based off of the numer
 
 ## Summary
 
-At its core, this challenge was about the pros and cons of refactoring code. 
+At its core, this work was about the pros and cons of refactoring code. 
 
 ### Pros
 
@@ -105,7 +105,7 @@ Refactoring could also make code easier to read, and easier to share because it 
 
 ### Cons
 
-In my opinion, refactoring's biggest con is the amount of time it takes. For just this small example, it took over an additional hour figure out how to go about removing the extra `For` loop. I knew that was the method I would be using, but it took time to form the new arrays and loops correctly. 
+In my opinion, refactoring's biggest con is the amount of time it takes. For just this small example, it took more than an additional hour to figure out how to go about removing the extra `For` loop. I knew that's what I wanted to do, but it took time to form the new arrays and loops correctly. 
 
 This can take even more time, because it opens you up to new bugs and typos. If you use the wrong variable, it can take several minutes to find your typo/inconsistency. If you format your new code wrong, it can take just as long to debug as to write the less efficient code to begin with. 
 
@@ -113,7 +113,7 @@ If you have a hard deadline looming, refactoring might not be worth it.
 
 ### Was it worth it?
 
-In this example, I believe it was worth the time to refactor the code. Aside from the learning opportunity, efficiency was important to the scenario. Our client wants the potential to analyze all stocks, so effiecency is the biggest feature my code could offer. 
+In this case, I believe it was worth the time to refactor the code. Aside from the learning opportunity, efficiency was important to my client. He wants the potential to analyze all stocks, so effiecency is the biggest feature my code could offer. 
 
 That's not to say it wasn't without challenges. By introducing more arrays, the complex variables opened me up to more typos and bugs. I had difficulties figuring out whether to use the *i* for looping or the tickerIndex variable. I went through much trial and error to get all of the details right, and the final issue that I had to pick through to find was in my conditional statements. 
 For the line `If Cells(i + 1, 1).Value <> tickers(tickerIndex) And Cells(i, 1).Value = tickers(tickerIndex) Then` , it took a long time for me to notice that I typed `Cells(i + 1)`, instead of `Cells(i + 1, 1)` . I missed the column call, and it was hard for me to see. Refactoring opens you up to little errors like those when you edit your working code. 
